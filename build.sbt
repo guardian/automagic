@@ -3,9 +3,10 @@ scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
 
 libraryDependencies ++= Seq(
   "org.scala-lang" % "scala-reflect" % scalaVersion.value,
-  "org.scalatest" %% "scalatest" % "3.0.1" % "test"
+  "org.scalatest" %% "scalatest" % "3.2.12" % "test"
 )
 
+crossScalaVersions := List("2.12.17", "2.11.12", "2.13.9")
 pomExtra :=
   <url>https://github.com/cb372/automagic</url>
   <licenses>
@@ -34,7 +35,7 @@ publishTo := {
     Some("releases"  at nexus + "service/local/staging/deploy/maven2")
 }
 publishMavenStyle := true
-publishArtifact in Test := false
+Test / publishArtifact := false
 pomIncludeRepository := { _ => false }
 releasePublishArtifactsAction := PgpKeys.publishSigned.value
 releaseCrossBuild := true
