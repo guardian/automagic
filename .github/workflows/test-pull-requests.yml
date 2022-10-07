@@ -17,25 +17,25 @@ jobs:
       checks: write
       pull-requests: write
 
-  steps:
-    - uses: actions/checkout@v3
+    steps:
+      - uses: actions/checkout@v2
 
-    - name: Setup JDK
-      uses: actions/setup-java@v3
-      with:
-        distribution: corretto
-        java-version: 8 #build on JDK 8 for maximum compatibility
-        cache: sbt
-    - name: Coursier cache
-      uses: coursier/cache-action@v5
+      - name: Setup JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: corretto
+          java-version: 8 #build on JDK 8 for maximum compatibility
+          cache: sbt
+      - name: Coursier cache
+        uses: coursier/cache-action@v5
 
-    - name: Run tests
-      env:
-        SBT_JUNIT_OUTPUT: ./junit-tests
-      run: sbt '+test'
+      - name: Run tests
+        env:
+          SBT_JUNIT_OUTPUT: ./junit-tests
+        run: sbt '+test'
 
-    - name: Publish Unit Test Results
-      uses: EnricoMi/publish-unit-test-result-action@v1
-      if: always()  #runs even if there is a test failure
-      with:
-        files: junit-tests/*.xml
+      - name: Publish Unit Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v1
+        if: always()  #runs even if there is a test failure
+        with:
+          files: junit-tests/*.xml
