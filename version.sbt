@@ -1,1 +1,3 @@
-version in ThisBuild := "0.2.2-SNAPSHOT"
+ThisBuild / dynverSonatypeSnapshots := true
+// ThisBuild / version is now set by the sbt-ci-release plugin
+// See https://github.com/sbt/sbt-ci-release for details
