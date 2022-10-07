@@ -1,4 +1,4 @@
-organization := "com.github.cb372"
+organization := "com.gu"
 scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature")
 
 crossScalaVersions := List("2.11.12","2.12.17", "2.13.8")
@@ -10,7 +10,6 @@ libraryDependencies ++= Seq(
 enablePlugins(plugins.JUnitXmlReportPlugin)
 Test / testOptions ++= Seq( Tests.Argument("-u", sys.env.getOrElse("SBT_JUNIT_OUTPUT","/tmp")) )
 
-ThisBuild / organization := "com.gu"
 ThisBuild / homepage := Some(url("https://github.com/guardian/automagic"))
 ThisBuild / licenses := List("Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0.html"))
 ThisBuild / developers := List(
@@ -18,7 +17,7 @@ ThisBuild / developers := List(
     "cb372",
     "Chris Birchall",
     "",
-    url("https://github/com/cb372")
+    url("https://github.com/cb372")
   )
 )
 
