@@ -1,2 +1,2 @@
-
 echo $PGP_SECRET | base64 --decode | gpg  --batch --import
+echo "credentials += Credentials(\"Sonatype Nexus Repository Manager\", \"oss.sonatype.org\", \"${SONATYPE_USERNAME}\", \"${SONATYPE_PASSWORD}\")" > ~/.sbt/1.0/sonatype.sbt
