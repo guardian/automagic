@@ -1,6 +1,7 @@
 package automagic
 
-import org.scalatest._
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
 object InputModels {
 
@@ -66,7 +67,7 @@ object OutputModels {
   }
 }
 
-class TransformSpec extends FlatSpec with Matchers {
+class TransformSpec extends AnyFlatSpec with Matchers {
   import InputModels._, OutputModels._
 
   it should "transform a case class to another case class" in {
