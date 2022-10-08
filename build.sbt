@@ -21,14 +21,7 @@ ThisBuild / developers := List(
   )
 )
 ThisBuild / versionScheme := Some("semver-spec")
-//publishTo := {
-//  val nexus = "https://oss.sonatype.org/"
-//  if (version.value.trim.endsWith("SNAPSHOT"))
-//    Some("snapshots" at nexus + "content/repositories/snapshots")
-//  else
-//    Some("releases"  at nexus + "service/local/staging/deploy/maven2")
-//}
-//publishTo := sonatypePublishToBundle.value
+
 publishMavenStyle := true
 Test / publishArtifact := false
 pomIncludeRepository := { _ => false }
