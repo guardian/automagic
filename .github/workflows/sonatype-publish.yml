@@ -21,11 +21,11 @@ jobs:
           distribution: corretto
           java-version: 8 #build on JDK 8 for maximum compatibility
           cache: sbt
-
-      - name: Run tests
-        env:
-          SBT_JUNIT_OUTPUT: ./junit-tests
-        run: sbt '+test'
+#
+#      - name: Run tests
+#        env:
+#          SBT_JUNIT_OUTPUT: ./junit-tests
+#        run: sbt '+test'
 
       - name: Release to Sonatype
         env:
@@ -35,4 +35,5 @@ jobs:
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
         run: |
           ./.github/decodekey.sh
-          sbt +ci-release
+          export GPG_TTY=$(tty)
+          sbt ci-release
