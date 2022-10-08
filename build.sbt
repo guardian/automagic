@@ -20,7 +20,7 @@ ThisBuild / developers := List(
     url("https://github.com/cb372")
   )
 )
-
+ThisBuild / versionScheme := Some("semver-spec")
 //publishTo := {
 //  val nexus = "https://oss.sonatype.org/"
 //  if (version.value.trim.endsWith("SNAPSHOT"))
