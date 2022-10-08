@@ -32,7 +32,7 @@ jobs:
         run: echo ::set-output name=version::$(sbt -Dsbt.supershell=false -error "print version")
 
       - name: Release to Sonatype
-        if: ${{ !endsWith( steps.project.outputs.version, '-SNAPSHOT ') }}
+        if: ${{ !contains( steps.project.outputs.version, '-SNAPSHOT ') }}
         env:
           PGP_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
           PGP_SECRET: ${{ secrets.PGP_SECRET }}
@@ -44,7 +44,7 @@ jobs:
 
       #We can't do a full Sonatype release if going to snapshots apparently, see https://github.com/xerial/sbt-sonatype#publishing-your-artifact
       - name: Release to snapshots
-        if: ${{ endsWith( steps.project.outputs.version, '-SNAPSHOT ') }}
+        if: ${{ contains( steps.project.outputs.version, '-SNAPSHOT ') }}
         env:
           PGP_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
           PGP_SECRET: ${{ secrets.PGP_SECRET }}
