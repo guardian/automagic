@@ -122,7 +122,11 @@ val myModel: MyModel = transform[TheirModel, MyModel](theirModel, "foo" -> 123, 
 
 ## Requirements
 
-Works with Scala 2.11 or newer.
+Works with Scala 2.11 or newer. Not yet compatible with Scala 3.x.
+
+## How are releases made
+
+You can now simply declare a release with the Github UI and it will be automatically cross-built and uploaded to Maven Central.
 
 ## Acknowledgements
 

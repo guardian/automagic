@@ -14,15 +14,48 @@ jobs:
       pull-requests: write
 
     steps:
+      - uses: actions/checkout@v2
       - name: Setup JDK
         uses: actions/setup-java@v3
         with:
           distribution: corretto
           java-version: 8 #build on JDK 8 for maximum compatibility
           cache: sbt
-      - run: sbt +ci-release
+
+      - name: Run tests
+        env:
+          SBT_JUNIT_OUTPUT: ./junit-tests
+        run: sbt '+test'
+
+      - name: Extract build version
+        id: project
+        run: echo ::set-output name=version::$(sbt -Dsbt.supershell=false -error "print version")
+
+      - name: Release to Sonatype
+        if: ${{ !contains( steps.project.outputs.version, '-SNAPSHOT') }}
         env:
           PGP_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
           PGP_SECRET: ${{ secrets.PGP_SECRET }}
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+        run: |
+          ./.github/decodekey.sh
+          sbt ci-release
+
+      #We can't do a full Sonatype release if going to snapshots apparently, see https://github.com/xerial/sbt-sonatype#publishing-your-artifact
+      - name: Release to snapshots
+        if: ${{ contains( steps.project.outputs.version, '-SNAPSHOT') }}
+        env:
+          PGP_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
+          PGP_SECRET: ${{ secrets.PGP_SECRET }}
+          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+        run: |
+          ./.github/decodekey.sh
+          sbt +publishSigned
+
+      - name: Publish Unit Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v1
+        if: always()  #runs even if there is a test failure
+        with:
+          files: junit-tests/*.xml
