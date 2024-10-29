@@ -15,13 +15,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Setup JDK
-        uses: actions/setup-java@v3
-        with:
-          distribution: corretto
-          java-version: 8 #build on JDK 8 for maximum compatibility
-          cache: sbt
-
+      - uses: guardian/setup-scala@v1
       - name: Run tests
         env:
           SBT_JUNIT_OUTPUT: ./junit-tests
